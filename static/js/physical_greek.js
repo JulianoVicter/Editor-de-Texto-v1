@@ -3,21 +3,19 @@
   if (!textarea) return;
 
   const greekLower = {
-    a: "α",
-    b: "β",
-    g: "γ",
-    d: "δ",
-    e: "ε",
-    o: "ο"
+    a: "α", b: "β", g: "γ", d: "δ", e: "ε", z: "ζ",
+    h: "η", i: "ι", o: "ο", u: "υ", w: "ω",
+    k: "κ", l: "λ", m: "μ", n: "ν", x: "ξ",
+    p: "π", r: "ρ", s: "σ", t: "τ", y: "ψ",
+    f: "φ", q: "θ", c: "χ", v: "ς"
   };
 
   const greekUpper = {
-    a: "Α",
-    b: "Β",
-    g: "Γ",
-    d: "Δ",
-    e: "Ε",
-    o: "Ο"
+    a: "Α", b: "Β", g: "Γ", d: "Δ", e: "Ε", z: "Ζ",
+    h: "Η", i: "Ι", o: "Ο", u: "Υ", w: "Ω",
+    k: "Κ", l: "Λ", m: "Μ", n: "Ν", x: "Ξ",
+    p: "Π", r: "Ρ", s: "Σ", t: "Τ", y: "Ψ",
+    f: "Φ", q: "Θ", c: "Χ", v: "Σ"
   };
 
   function insertAtCursor(el, text) {
@@ -30,21 +28,13 @@
     el.focus();
   }
 
-  const codeMap = {
-    KeyA: "a",
-    KeyB: "b",
-    KeyG: "g",
-    KeyD: "d",
-    KeyE: "e",
-    KeyO: "o"
-  };
-
   let suppressDeadKey = false;
 
   textarea.addEventListener("keydown", (event) => {
     if (!event.altKey || event.metaKey || event.ctrlKey) return;
 
-    const base = codeMap[event.code];
+    if (!event.code.startsWith("Key")) return;
+    const base = event.code.slice(3).toLowerCase();
     if (!base) return;
 
     const map = event.shiftKey ? greekUpper : greekLower;
@@ -61,9 +51,16 @@
   textarea.addEventListener("beforeinput", (event) => {
     if (!suppressDeadKey) return;
 
+    const data = event.data || "";
+    const code = data ? data.codePointAt(0) : null;
+    const isCombining = code !== null && code >= 0x0300 && code <= 0x036F;
+    const isAcute = data === "´" || data === "ʼ" || data === "’";
+
     if (event.inputType === "insertCompositionText" || event.inputType === "insertText") {
-      event.preventDefault();
-      suppressDeadKey = false;
+      if (isCombining || isAcute || data === "") {
+        event.preventDefault();
+        suppressDeadKey = false;
+      }
     }
   });
 
@@ -76,18 +73,8 @@
     }
   });
 
-  textarea.addEventListener("input", () => {
-    if (!suppressDeadKey) return;
-
-    const value = textarea.value;
-    if (!value) return;
-    const last = value.slice(-1);
-    if (last === "´" || last === "\u0301") {
-      const start = textarea.selectionStart;
-      const end = textarea.selectionEnd;
-      textarea.value = value.slice(0, -1);
-      const cursor = Math.max(0, Math.min(start - 1, textarea.value.length));
-      textarea.selectionStart = textarea.selectionEnd = cursor;
+  textarea.addEventListener("compositionstart", () => {
+    if (suppressDeadKey) {
       suppressDeadKey = false;
     }
   });

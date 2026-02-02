@@ -23,9 +23,6 @@
   <form method="post" action="#" class="editor-form">
     <label class="field-label" for="title">Título</label>
     <input id="title" class="input title-input" value="{{ doc.title }}" placeholder="Título do documento">
-
-    <label class="field-label" for="content">Conteúdo</label>
-    <textarea id="content" class="editor-area" rows="18" placeholder="Comece a escrever...">{{ doc.content }}</textarea>
   </form>
 </section>
 
@@ -36,6 +33,22 @@
   </div>
   <div id="keyboard" class="keyboard" aria-label="Teclado virtual"></div>
 </section>
+
+<section class="panel">
+  <h2>Conversão para Grego Arcaico</h2>
+  <p class="muted">A conversão é apenas de caracteres, sem alterar palavras ou pontuação.</p>
+  <div class="split">
+    <div>
+      <label class="field-label" for="content">Texto original</label>
+      <textarea id="content" class="editor-area" rows="14" placeholder="Cole ou escreva o texto...">{{ doc.content }}</textarea>
+    </div>
+    <div>
+      <label class="field-label" for="converted">Texto convertido</label>
+      <textarea id="converted" class="editor-area" rows="14" readonly></textarea>
+    </div>
+  </div>
+  <div id="diffs" class="diffs"></div>
+</section>
 {% endblock %}
 
 {% block scripts %}
@@ -45,4 +58,5 @@
   <script src="{% static 'js/editor.js' %}"></script>
   <script src="{% static 'keyboard/keyboard.js' %}"></script>
   <script src="{% static 'js/physical_greek.js' %}"></script>
+  <script src="{% static 'js/greek_convert.js' %}"></script>
 {% endblock %}
