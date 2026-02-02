@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ doc.title }}{% endblock %}
+
+{% block content %}
+<section class="panel panel-tight">
+  <div class="panel-header">
+    <div class="row gap">
+      <a class="btn btn-ghost" href="{% url 'doc_list' %}">← Voltar</a>
+      <span class="chip">Documento</span>
+    </div>
+    <div class="row gap">
+      <span id="status" class="status">Pronto</span>
+      <button id="saveBtn" class="btn btn-primary" type="button">Salvar</button>
+    </div>
+  </div>
+
+  <form method="post" action="#" class="editor-form">
+    <label class="field-label" for="title">Título</label>
+    <input id="title" class="input title-input" value="{{ doc.title }}" placeholder="Título do documento">
+
+    <label class="field-label" for="content">Conteúdo</label>
+    <textarea id="content" class="editor-area" rows="18" placeholder="Comece a escrever...">{{ doc.content }}</textarea>
+  </form>
+</section>
+{% endblock %}
+
+{% block scripts %}
+  <script>
+    const SAVE_URL = "{% url 'doc_save' doc.id %}";
+  </script>
+  <script src="{% static 'js/editor.js' %}"></script>
+{% endblock %}

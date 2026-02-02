@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Documentos{% endblock %}
+
+{% block content %}
+<section class="hero">
+  <div class="hero-text">
+    <p class="eyebrow">Editor de Texto</p>
+    <h1>Seus documentos, com foco total no que importa.</h1>
+    <p class="subhead">Crie, edite e acompanhe tudo em um só lugar.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="{% url 'doc_create' %}">+ Novo documento</a>
+      <span class="chip">{{ docs|length }} documento(s)</span>
+    </div>
+  </div>
+  <div class="hero-card">
+    <div class="card-top">
+      <span class="dot"></span>
+      <span class="dot dot-warm"></span>
+      <span class="dot dot-cool"></span>
+    </div>
+    <div class="card-body">
+      <p class="card-title">Últimas edições</p>
+      {% if docs %}
+        <ul class="mini-list">
+          {% for d in docs|slice:":4" %}
+            <li>{{ d.title }}</li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p class="muted">Nenhum documento por aqui ainda.</p>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<section class="panel">
+  <div class="panel-header">
+    <h2>Documentos</h2>
+    <a class="btn btn-ghost" href="{% url 'doc_create' %}">Criar novo</a>
+  </div>
+
+  {% if docs %}
+    <div class="doc-grid">
+      {% for d in docs %}
+        <a class="doc-card" href="{% url 'doc_edit' d.id %}">
+          <div class="doc-card-title">{{ d.title }}</div>
+          <div class="doc-card-meta">Clique para editar</div>
+        </a>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="empty-state">
+      <p class="empty-title">Comece pelo primeiro documento</p>
+      <p class="muted">Use o botão acima para criar um novo arquivo.</p>
+    </div>
+  {% endif %}
+</section>
+{% endblock %}
