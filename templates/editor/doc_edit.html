@@ -3,6 +3,10 @@
 
 {% block title %}{{ doc.title }}{% endblock %}
 
+{% block head %}
+  <link rel="stylesheet" href="{% static 'keyboard/keyboard.css' %}">
+{% endblock %}
+
 {% block content %}
 <section class="panel panel-tight">
   <div class="panel-header">
@@ -24,6 +28,14 @@
     <textarea id="content" class="editor-area" rows="18" placeholder="Comece a escrever...">{{ doc.content }}</textarea>
   </form>
 </section>
+
+<section class="panel">
+  <div class="keyboard-header">
+    <span class="kbd-title">Teclado Virtual</span>
+    <button id="toggleLayout" class="btn btn-ghost" type="button">Latin</button>
+  </div>
+  <div id="keyboard" class="keyboard" aria-label="Teclado virtual"></div>
+</section>
 {% endblock %}
 
 {% block scripts %}
@@ -31,4 +43,5 @@
     const SAVE_URL = "{% url 'doc_save' doc.id %}";
   </script>
   <script src="{% static 'js/editor.js' %}"></script>
+  <script src="{% static 'keyboard/keyboard.js' %}"></script>
 {% endblock %}

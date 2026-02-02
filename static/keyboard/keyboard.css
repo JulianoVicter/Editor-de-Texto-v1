@@ -1,0 +1,49 @@
+.keyboard-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.kbd-title { font-weight: 600; color: var(--ink-soft); }
+
+.keyboard {
+  display: grid;
+  gap: 10px;
+}
+
+.kbd-row {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.kbd-btn {
+  border: 1px solid var(--stroke);
+  background: #fff;
+  color: var(--ink);
+  border-radius: 12px;
+  padding: 10px 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.kbd-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 16px rgba(32,27,24,0.12); }
+
+.kbd-btn-wide { grid-column: span 2; }
+.kbd-btn-xwide { grid-column: span 3; }
+
+.kbd-btn-accent {
+  background: var(--accent);
+  color: #fff;
+  border-color: transparent;
+}
+
+.kbd-btn-ghost {
+  background: transparent;
+  border-color: var(--stroke);
+}
+
+.kbd-btn-armed {
+  outline: 2px solid #ffb59f;
+  box-shadow: 0 0 0 2px rgba(255,181,159,0.4);
+}

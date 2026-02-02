@@ -12,6 +12,9 @@ def doc_list(request):
     docs = Document.objects.all().order_by("-updated_at")
     return render(request, "editor/doc_list.html", {"docs": docs})
 
+def keyboard_editor(request):
+    return render(request, "editor/keyboard_editor.html")
+
 
 def doc_create(request):
     doc = Document.objects.create(title="Novo documento")
