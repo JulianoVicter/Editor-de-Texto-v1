@@ -43,10 +43,16 @@
   {% if docs %}
     <div class="doc-grid">
       {% for d in docs %}
-        <a class="doc-card" href="{% url 'doc_edit' d.id %}">
-          <div class="doc-card-title">{{ d.title }}</div>
-          <div class="doc-card-meta">Clique para editar</div>
-        </a>
+        <div class="doc-card">
+          <a class="doc-card-link" href="{% url 'doc_edit' d.id %}">
+            <div class="doc-card-title">{{ d.title }}</div>
+            <div class="doc-card-meta">Clique para editar</div>
+          </a>
+          <form class="doc-card-actions" method="post" action="{% url 'doc_delete' d.id %}">
+            {% csrf_token %}
+            <button class="btn btn-danger" type="submit">Excluir</button>
+          </form>
+        </div>
       {% endfor %}
     </div>
   {% else %}

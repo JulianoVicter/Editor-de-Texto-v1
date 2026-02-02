@@ -61,6 +61,12 @@ body {
   color: var(--ink);
   border-color: var(--stroke);
 }
+.btn-danger {
+  background: #fff;
+  color: #b42318;
+  border-color: rgba(180, 35, 24, 0.2);
+}
+.btn-danger:hover { background: #fff4f2; }
 
 .hero {
   display: grid;
@@ -140,11 +146,15 @@ body {
   border-radius: 16px;
   border: 1px solid var(--stroke);
   background: #fff;
-  text-decoration: none;
-  color: inherit;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 .doc-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+.doc-card-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+.doc-card-actions { margin-top: 12px; }
 .doc-card-title { font-weight: 600; margin-bottom: 8px; }
 .doc-card-meta { font-size: 0.9rem; color: var(--ink-soft); }
 

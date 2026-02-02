@@ -22,6 +22,12 @@ def doc_edit(request, doc_id):
     doc = get_object_or_404(Document, id=doc_id)
     return render(request, "editor/doc_edit.html", {"doc": doc})
 
+@require_POST
+def doc_delete(request, doc_id):
+    doc = get_object_or_404(Document, id=doc_id)
+    doc.delete()
+    return redirect("doc_list")
+
 
 @require_POST
 def doc_save(request, doc_id):
