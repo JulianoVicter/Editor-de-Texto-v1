@@ -25,9 +25,14 @@ PROJECT_ROOT = BASE_DIR.parent
 SECRET_KEY = 'django-insecure--!yjj_y9y0-2!=euj^$5^ohcfei7k05l^cdylhj^&!_yykudh+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "archaic-greek-text-editor.onrender.com",
+    "archaicgreek.com",
+    "www.archaicgreek.com",
+]
+
 
 
 # Application definition
