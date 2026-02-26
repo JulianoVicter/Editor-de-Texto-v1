@@ -1,16 +1,17 @@
 {% extends "base.html" %}
+{% load editor_i18n %}
 
-{% block title %}Documentos{% endblock %}
+{% block title %}{% tr request "LIST_TITLE" %}{% endblock %}
 
 {% block content %}
 <section class="hero">
   <div class="hero-text">
-    <p class="eyebrow">Editor de Texto</p>
-    <h1>Grego Arcaico e Antigo.</h1>
-    <p class="subhead">Crie, edite e acompanhe tudo em um só lugar.</p>
+    <p class="eyebrow">{% tr request "EYEBROW" %}</p>
+    <h1>{% tr request "HERO_TITLE" %}</h1>
+    <p class="subhead">{% tr request "HERO_SUBHEAD" %}</p>
     <div class="hero-actions">
-      <a class="btn btn-primary" href="{% url 'doc_create' %}">+ Novo documento</a>
-      <span class="chip">{{ docs|length }} documento(s)</span>
+      <a class="btn btn-primary" href="{% url 'doc_create' %}">{% tr request "NEW_DOCUMENT" %}</a>
+      <span class="chip">{{ docs|length }} {% tr request "DOC_SHORT" %}</span>
     </div>
   </div>
   <div class="hero-card">
@@ -20,7 +21,7 @@
       <span class="dot dot-cool"></span>
     </div>
     <div class="card-body">
-      <p class="card-title">Últimas edições</p>
+      <p class="card-title">{% tr request "LATEST_EDITS" %}</p>
       {% if docs %}
         <ul class="mini-list">
           {% for d in docs|slice:":4" %}
@@ -28,7 +29,7 @@
           {% endfor %}
         </ul>
       {% else %}
-        <p class="muted">Nenhum documento por aqui ainda.</p>
+        <p class="muted">{% tr request "NO_DOCS_YET" %}</p>
       {% endif %}
     </div>
   </div>
@@ -36,8 +37,8 @@
 
 <section class="panel">
   <div class="panel-header">
-    <h2>Documentos</h2>
-    <a class="btn btn-ghost" href="{% url 'doc_create' %}">Criar novo</a>
+    <h2>{% tr request "DOCUMENTS" %}</h2>
+    <a class="btn btn-ghost" href="{% url 'doc_create' %}">{% tr request "CREATE_NEW" %}</a>
   </div>
 
   {% if docs %}
@@ -46,19 +47,19 @@
         <div class="doc-card">
           <a class="doc-card-link" href="{% url 'doc_edit' d.id %}">
             <div class="doc-card-title">{{ d.title }}</div>
-            <div class="doc-card-meta">Clique para editar</div>
+            <div class="doc-card-meta">{% tr request "CLICK_TO_EDIT" %}</div>
           </a>
           <form class="doc-card-actions" method="post" action="{% url 'doc_delete' d.id %}">
             {% csrf_token %}
-            <button class="btn btn-danger" type="submit">Excluir</button>
+            <button class="btn btn-danger" type="submit">{% tr request "DELETE" %}</button>
           </form>
         </div>
       {% endfor %}
     </div>
   {% else %}
     <div class="empty-state">
-      <p class="empty-title">Comece pelo primeiro documento</p>
-      <p class="muted">Use o botão acima para criar um novo arquivo.</p>
+      <p class="empty-title">{% tr request "START_FIRST_DOCUMENT" %}</p>
+      <p class="muted">{% tr request "USE_BUTTON_CREATE" %}</p>
     </div>
   {% endif %}
 </section>

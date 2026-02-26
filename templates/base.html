@@ -1,8 +1,7 @@
 {% load static %}
-<link rel="stylesheet" href="{% static 'css/style.css' %}">
-<script src="{% static 'js/editor.js' %}"></script>
+{% load editor_i18n %}
 <!doctype html>
-<html lang="pt-br">
+<html lang="{{ lang_code }}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,8 +11,18 @@
 </head>
 <body>
   <header class="topbar">
-    <div class="container">
-      <a class="brand" href="/editor/">Editor</a>
+    <div class="container topbar-inner">
+      <a class="brand" href="/editor/">{% tr request "APP_BRAND" %}</a>
+      <form class="lang-form" method="post" action="{% url 'set_language' %}">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ request.get_full_path }}">
+        <label for="lang" class="lang-label">{% tr request "LANGUAGE" %}</label>
+        <select id="lang" name="lang" class="lang-select" onchange="this.form.submit()">
+          {% for code, label in language_options %}
+            <option value="{{ code }}" {% if code == lang_code %}selected{% endif %}>{{ label }}</option>
+          {% endfor %}
+        </select>
+      </form>
     </div>
   </header>
 

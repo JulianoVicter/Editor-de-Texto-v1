@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load editor_i18n %}
 
 {% block title %}{{ doc.title }}{% endblock %}
 
@@ -11,39 +12,46 @@
 <section class="panel panel-tight">
   <div class="panel-header">
     <div class="row gap">
-      <a class="btn btn-ghost" href="{% url 'doc_list' %}">← Voltar</a>
-      <span class="chip">Documento</span>
+      <a class="btn btn-ghost" href="{% url 'doc_list' %}"><- {% tr request "BACK" %}</a>
+      <span class="chip">{% tr request "DOCUMENT" %}</span>
     </div>
     <div class="row gap">
-      <span id="status" class="status">Pronto</span>
-      <button id="saveBtn" class="btn btn-primary" type="button">Salvar</button>
+      <span id="status" class="status">{% tr request "READY" %}</span>
+      <button id="saveBtn" class="btn btn-primary" type="button">{% tr request "SAVE" %}</button>
     </div>
   </div>
 
   <form method="post" action="#" class="editor-form">
-    <label class="field-label" for="title">Título</label>
-    <input id="title" class="input title-input" value="{{ doc.title }}" placeholder="Título do documento">
+    <label class="field-label" for="title">{% tr request "TITLE" %}</label>
+    <input id="title" class="input title-input" value="{{ doc.title }}" placeholder="{% tr request 'TITLE_PLACEHOLDER' %}">
   </form>
 </section>
 
 <section class="panel">
   <div class="keyboard-header">
-    <span class="kbd-title">Teclado Virtual</span>
-    <button id="toggleLayout" class="btn btn-ghost" type="button">Latin</button>
+    <span class="kbd-title">{% tr request "VIRTUAL_KEYBOARD" %}</span>
+    <button
+      id="toggleLayout"
+      class="btn btn-ghost"
+      type="button"
+      data-label-latin="{% tr request 'TOGGLE_LATIN' %}"
+      data-label-greek="{% tr request 'TOGGLE_GREEK' %}"
+    >{% tr request "TOGGLE_LATIN" %}</button>
   </div>
-  <div id="keyboard" class="keyboard" aria-label="Teclado virtual"></div>
+  <p class="muted">{% tr request "KEYBOARD_TIP" %}</p>
+  <div id="keyboard" class="keyboard" aria-label="{% tr request 'VIRTUAL_KEYBOARD' %}"></div>
 </section>
 
 <section class="panel">
-  <h2>Conversão para Grego Arcaico</h2>
-  <p class="muted">A conversão é apenas de caracteres, sem alterar palavras ou pontuação.</p>
+  <h2>{% tr request "CONVERSION_TITLE" %}</h2>
+  <p class="muted">{% tr request "CONVERSION_DESC" %}</p>
   <div class="split">
     <div>
-      <label class="field-label" for="content">Texto original</label>
-      <textarea id="content" class="editor-area" rows="14" placeholder="Cole ou escreva o texto...">{{ doc.content }}</textarea>
+      <label class="field-label" for="content">{% tr request "ORIGINAL_TEXT" %}</label>
+      <textarea id="content" class="editor-area" rows="14" placeholder="{% tr request 'ORIGINAL_PLACEHOLDER' %}">{{ doc.content }}</textarea>
     </div>
     <div>
-      <label class="field-label" for="converted">Texto convertido</label>
+      <label class="field-label" for="converted">{% tr request "CONVERTED_TEXT" %}</label>
       <textarea id="converted" class="editor-area" rows="14" readonly></textarea>
     </div>
   </div>
@@ -54,6 +62,11 @@
 {% block scripts %}
   <script>
     const SAVE_URL = "{% url 'doc_save' doc.id %}";
+    window.UI_TEXT = {
+      saving: "{% tr request 'SAVING' %}",
+      saveError: "{% tr request 'SAVE_ERROR' %}",
+      saved: "{% tr request 'SAVED' %}",
+    };
   </script>
   <script src="{% static 'js/editor.js' %}"></script>
   <script src="{% static 'keyboard/keyboard.js' %}"></script>

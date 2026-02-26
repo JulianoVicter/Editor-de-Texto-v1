@@ -250,9 +250,14 @@ if (keyboard && editor) {
 }
 
 if (toggleLayoutBtn && keyboard && editor) {
+  const latinLabel = toggleLayoutBtn.dataset.labelLatin || "Latin";
+  const greekLabel = toggleLayoutBtn.dataset.labelGreek || "Greek";
+
+  toggleLayoutBtn.textContent = state.layout === "greek" ? latinLabel : greekLabel;
+
   toggleLayoutBtn.addEventListener("click", () => {
     state.layout = state.layout === "greek" ? "latin" : "greek";
-    toggleLayoutBtn.textContent = state.layout === "greek" ? "Latin" : "Grego";
+    toggleLayoutBtn.textContent = state.layout === "greek" ? latinLabel : greekLabel;
     renderKeyboard();
   });
 }
